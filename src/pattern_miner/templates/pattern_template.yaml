@@ -1,0 +1,12 @@
+# Example pattern
+id: <generated>
+title: Example Pattern
+context: |
+  Describe the context in which the pattern applies.
+problem: |
+  What problem arises within that context?
+forces: |
+  What forces or trade‑offs must be balanced?
+solution: |
+  The proven resolution of the forces seen in this context.
+generated: <timestamp>

@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run Pattern Miner",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/pattern_miner/cli.py",
+      "console": "integratedTerminal",
+      "args": [
+        "${workspaceFolder}/examples/docs",
+        "${workspaceFolder}/output"
+      ]
+    }
+  ]
+}
