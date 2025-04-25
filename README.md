@@ -7,7 +7,11 @@ Pattern Miner scans a repository of Markdown documentation, discovers recurring 
 pip install -r requirements.txt
 
 # mine patterns
-pattern-miner /path/to/docs /path/to/output
+
+Run from the root folder.
+
+```
+python3 -m src.pattern_miner.cli /path/to/docs /path/to/output
 ```
 
 Output:

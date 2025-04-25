@@ -1,4 +1,5 @@
 from dataclasses import dataclass, asdict
+import datetime, yaml
 
 @dataclass
 class Pattern:
@@ -12,7 +13,7 @@ class Pattern:
     def to_yaml(self):
         import yaml, datetime, uuid
         data = asdict(self)
-        data["generated"] = datetime.datetime.utcnow().isoformat()
+        data["generated"] = datetime.datetime.now(datetime.UTC).isoformat()
         return yaml.dump(data, sort_keys=False)
 
 class PatternRepository:

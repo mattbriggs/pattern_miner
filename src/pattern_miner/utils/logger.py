@@ -19,3 +19,7 @@ class _Logger:
         handler.setFormatter(formatter)
         self.logger.addHandler(handler)
         _Logger._instance = self.logger
+
+def get_logger():
+    """Return the shared logger instance (alias for _Logger.get())."""
+    return _Logger.get()

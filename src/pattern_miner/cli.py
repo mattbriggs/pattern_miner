@@ -1,6 +1,6 @@
 import click
 from pathlib import Path
-from pattern_miner.miner import PatternMiner
+from .miner import PatternMiner
 
 @click.command()
 @click.argument('docs_path', type=click.Path(exists=True, file_okay=False))

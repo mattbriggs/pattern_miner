@@ -1,8 +1,7 @@
 import re, hashlib
 from pathlib import Path
-from markdown_it import MarkdownIt
-from pattern_miner.patterns import Pattern
-from pattern_miner.utils.logger import _Logger
+from .patterns import Pattern
+from .utils.logger import _Logger
 
 log = _Logger.get()
 
@@ -10,14 +9,21 @@ class ExtractorStrategy:
     def extract(self, md_path: Path):
         raise NotImplementedError
 
+
 class HeadingBlockStrategy(ExtractorStrategy):
-    """Simple heuristic extractor using H2–H3 headings."""
-    RE_FIELDS = re.compile(r'(?s)###\s*Context\s*(.*?)###\s*Problem\s*(.*?)###\s*Forces\s*(.*?)###\s*Solution\s*(.*?)($|###)', re.IGNORECASE)
+    """Heuristic extractor using H3 headings (###). 
+       Allows leading spaces before the hashes."""
+    
+    RE_FIELDS = re.compile(
+        r'(?s)^\s*###\s*Context\s*(.*?)^\s*###\s*Problem\s*(.*?)'
+        r'^\s*###\s*Forces\s*(.*?)^\s*###\s*Solution\s*(.*?)(?:$|^\s*###)',
+        re.IGNORECASE | re.MULTILINE,
+    )
 
     def extract(self, md_path: Path):
-        text = md_path.read_text()
+        text = md_path.read_text(encoding="utf-8")
         for match in self.RE_FIELDS.finditer(text):
-            ctx, prob, forces, sol, _ = match.groups()
+            ctx, prob, forces, sol = match.groups()          # ← four vars
             uid = hashlib.sha1(prob.strip().encode()).hexdigest()[:8]
             yield Pattern(
                 id=uid,
@@ -25,5 +31,5 @@ class HeadingBlockStrategy(ExtractorStrategy):
                 context=ctx.strip(),
                 problem=prob.strip(),
                 forces=forces.strip(),
-                solution=sol.strip()
+                solution=sol.strip(),
             )
